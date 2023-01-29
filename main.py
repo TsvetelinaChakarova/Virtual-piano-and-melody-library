@@ -16,9 +16,9 @@ app.geometry("{}x{}".format(WINDOW_WIDTH, WINDOW_HEIGHT))
 app.minsize(WINDOW_WIDTH, WINDOW_HEIGHT)
 app.maxsize(WINDOW_WIDTH, WINDOW_HEIGHT)
 
-#set piano keys as buttons
 size_by_pixel = tk.PhotoImage(width=1, height=1)
 
+#set white piano keys as buttons
 white_key_1 = tk.Button(app, text="C3", fg="#000", image=size_by_pixel, bg='#FFF', height=WHITE_PIANO_KEY_HEIGHT, width=WHITE_PIANO_KEY_WIDTH, compound='bottom', anchor="s")  
 white_key_1.place(x=WHITE_PIANO_KEY_WIDTH*0, y=WINDOW_HEIGHT-WHITE_PIANO_KEY_HEIGHT)
 
@@ -70,7 +70,7 @@ white_key_16.place(x=WHITE_PIANO_KEY_WIDTH*15, y=WINDOW_HEIGHT-WHITE_PIANO_KEY_H
 white_key_17 = tk.Button(app, text="E5", fg="#000", image=size_by_pixel, bg='#FFF', height=WHITE_PIANO_KEY_HEIGHT, width=WHITE_PIANO_KEY_WIDTH, compound='bottom', anchor="s")  
 white_key_17.place(x=WHITE_PIANO_KEY_WIDTH*16, y=WINDOW_HEIGHT-WHITE_PIANO_KEY_HEIGHT) 
 
-#set black keys as buttons
+#set black piano keys as buttons
 black_key_1 = tk.Button(app, text="C#3", fg="#FFF",image=size_by_pixel, bg='#000', height=BLACK_PIANO_KEY_HEIGHT, width=BLACK_PIANO_KEY_WIDTH, compound='bottom', anchor="s")  
 black_key_1.place(x=(WHITE_PIANO_KEY_WIDTH*0)+(WHITE_PIANO_KEY_WIDTH - BLACK_PIANO_KEY_WIDTH/2), y=WINDOW_HEIGHT-WHITE_PIANO_KEY_HEIGHT)
 
