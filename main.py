@@ -3,6 +3,7 @@ import key_buttons
 from pydub import AudioSegment
 from playsound import playsound
 import record_melody    
+import registration_frame_functionalities
 
 WINDOW_WIDTH = 1020
 WINDOW_HEIGHT = 500
@@ -37,31 +38,7 @@ login_button = tk.Button(login_frame, text='Login', command=lambda:[change_to_vi
 login_button.pack()
 
 # for registration frame
-tk.Label(registration_frame, text="username:").pack()
-username_input_field = tk.Text(registration_frame, height=1, width=20)
-username_input_field.pack()
-
-tk.Label(registration_frame, text="password:").pack()
-password_input_field = tk.Text(registration_frame, height=1, width=20)
-password_input_field.pack()
-
-tk.Label(registration_frame, text="confirm password:").pack()
-confirm_password_input_field = tk.Text(registration_frame, height=1, width=20)
-confirm_password_input_field.pack()
-
-tk.Label(registration_frame, text="first name:").pack()
-first_name_input_field = tk.Text(registration_frame, height=1, width=20)
-first_name_input_field.pack()
-
-tk.Label(registration_frame, text="last name:").pack()
-last_name_input_field = tk.Text(registration_frame, height=1, width=20)
-last_name_input_field.pack()
-
-tk.Label(registration_frame, text="role:").pack()
-menu= tk.StringVar()
-menu.set("Select a role")
-role_dropdown = tk.OptionMenu(registration_frame, menu, "User with global rights", "User with local rights")
-role_dropdown.pack()
+registration_frame_functionalities.create_registration_fields(registration_frame)
 
 # for virtual_piano_frame
 size_by_pixel = tk.PhotoImage(width=1, height=1)
