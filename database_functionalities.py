@@ -7,6 +7,15 @@ def create_table(database, table):
     cursor = database.cursor()
     cursor.execute(table)
 
+def insert_into_user_table(username, password, first_name, last_name, role):
+    insert_query = """INSERT INTO users
+                          (username, password, first_name, last_name, role) 
+                           VALUES 
+                          (""" + "'" + username + "','" + password + "','" + first_name + "','" + last_name + "','" + role + "')"
+    # print(insert_query)
+    database.execute(insert_query)
+    database.commit()
+
 database = create_connection("virtual_piano_and_melody_library.db")
 
 user_table = """ CREATE TABLE IF NOT EXISTS users (
@@ -30,4 +39,3 @@ create_table(database, user_table)
 create_table(database, melodys_table)
 
 database.commit()
-database.close()

@@ -3,6 +3,7 @@ import key_buttons
 from pydub import AudioSegment
 from playsound import playsound
 import record_melody    
+import database_functionalities
 import registration_frame_functionalities
 
 WINDOW_WIDTH = 1020

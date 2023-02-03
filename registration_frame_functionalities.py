@@ -1,4 +1,5 @@
 import tkinter as tk
+import database_functionalities
 
 def register(username_input_field, password_input_field, confirm_password_input_field, 
              first_name_input_field, last_name_input_field, menu):
@@ -9,6 +10,7 @@ def register(username_input_field, password_input_field, confirm_password_input_
     last_name = last_name_input_field.get("1.0", "end-1c")
     role = menu.get()
 
+    database_functionalities.insert_into_user_table(username, password, first_name, last_name, role)
 
 def create_registration_fields(registration_frame):
     tk.Label(registration_frame, text="username:").pack()
