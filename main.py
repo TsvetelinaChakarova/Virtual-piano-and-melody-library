@@ -18,10 +18,11 @@ app.maxsize(WINDOW_WIDTH, WINDOW_HEIGHT)
 size_by_pixel = tk.PhotoImage(width=1, height=1)
 key_buttons.create_key_buttons(app, WINDOW_HEIGHT, size_by_pixel)
 
-record_melody_button = tk.Button(text='Record a melody', command=record_melody.record_melody)
+record_melody_button = tk.Button(text='Record a melody', command=lambda:[record_melody.record_melody()])
 record_melody_button.pack()
 
-stop_record_melody_button = tk.Button(text='Stop recording a melody', command=lambda:[record_melody.stop_recording_melody(), record_melody.open_save_melody_popup_window(app)])
+stop_record_melody_button = tk.Button(text='Stop recording a melody',
+                                      command=lambda:[record_melody.stop_recording_melody(app)])
 stop_record_melody_button.pack()
 
 app.mainloop()
