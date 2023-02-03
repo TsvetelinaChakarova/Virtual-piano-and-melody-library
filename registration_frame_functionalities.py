@@ -12,11 +12,11 @@ def close_window(window):
 
 def get_input_fields_data(username_input_field, password_input_field, confirm_password_input_field, 
                           first_name_input_field, last_name_input_field, menu):
-    registration_fields_data['username'] = username_input_field.get("1.0", "end-1c")
-    registration_fields_data['password'] = password_input_field.get("1.0", "end-1c")
-    registration_fields_data['confirm_password'] = confirm_password_input_field.get("1.0", "end-1c")
-    registration_fields_data['first_name'] = first_name_input_field.get("1.0", "end-1c")
-    registration_fields_data['last_name'] = last_name_input_field.get("1.0", "end-1c")
+    registration_fields_data['username'] = username_input_field.get()
+    registration_fields_data['password'] = password_input_field.get()
+    registration_fields_data['confirm_password'] = confirm_password_input_field.get()
+    registration_fields_data['first_name'] = first_name_input_field.get()
+    registration_fields_data['last_name'] = last_name_input_field.get()
     registration_fields_data['role'] = menu.get()
 
 
@@ -45,23 +45,23 @@ def register(registration_frame, username_input_field, password_input_field, con
 
 def create_registration_fields(registration_frame):
     tk.Label(registration_frame, text="username:").pack()
-    username_input_field = tk.Text(registration_frame, height=1, width=20)
+    username_input_field = tk.Entry(registration_frame)
     username_input_field.pack()
 
     tk.Label(registration_frame, text="password:").pack()
-    password_input_field = tk.Text(registration_frame, height=1, width=20)
+    password_input_field = tk.Entry(registration_frame, show='*')
     password_input_field.pack()
 
     tk.Label(registration_frame, text="confirm password:").pack()
-    confirm_password_input_field = tk.Text(registration_frame, height=1, width=20)
+    confirm_password_input_field = tk.Entry(registration_frame, show='*')
     confirm_password_input_field.pack()
 
     tk.Label(registration_frame, text="first name:").pack()
-    first_name_input_field = tk.Text(registration_frame, height=1, width=20)
+    first_name_input_field = tk.Entry(registration_frame)
     first_name_input_field.pack()
 
     tk.Label(registration_frame, text="last name:").pack()
-    last_name_input_field = tk.Text(registration_frame, height=1, width=20)
+    last_name_input_field = tk.Entry(registration_frame)
     last_name_input_field.pack()
 
     tk.Label(registration_frame, text="role:").pack()
