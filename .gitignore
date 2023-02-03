@@ -1,2 +1,7 @@
 virtual_piano_and_melody_library.db
 __pycache__/registration_frame_functionalities.cpython-310.pyc
+__pycache__/database_functionalities.cpython-310.pyc
+__pycache__/key_buttons.cpython-310.pyc
+__pycache__/play_sound.cpython-310.pyc
+__pycache__/record_melody.cpython-310.pyc
+__pycache__/registration_frame.cpython-310.pyc
