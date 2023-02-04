@@ -1,22 +1,11 @@
 import tkinter as tk
 import database_functionalities
+import popup_windows
 
 login_fields_data = {}
 
-PASSWORD_POPUP_WINDOW_WIDTH = 300
-PASSWORD_POPUP_WINDOW_HEIGHT = 100
-
 def close_window(window):
     window.destroy()
-
-def wrong_passwords_popup(login_frame, error_message): 
-    password_popup_window = tk.Toplevel(login_frame)
-    password_popup_window.geometry("{}x{}".format(PASSWORD_POPUP_WINDOW_WIDTH, PASSWORD_POPUP_WINDOW_HEIGHT))
-    password_popup_window.minsize(PASSWORD_POPUP_WINDOW_WIDTH, PASSWORD_POPUP_WINDOW_HEIGHT)
-    password_popup_window.maxsize(PASSWORD_POPUP_WINDOW_WIDTH, PASSWORD_POPUP_WINDOW_HEIGHT)
-    tk.Label(password_popup_window, text=error_message).pack()
-    try_again_button = tk.Button(password_popup_window, text="Try again!", command=lambda:[close_window(password_popup_window)])
-    try_again_button.pack()
 
 def get_input_fields_data(username_input_field, password_input_field):
     login_fields_data['username'] = username_input_field.get()
@@ -28,7 +17,7 @@ def change_to_virtual_piano_frame(login_frame, virtual_piano_frame, username_inp
         virtual_piano_frame.pack(fill='both', expand=1)
         login_frame.pack_forget()
     else:
-        wrong_passwords_popup(login_frame, "Invalid username or password!")
+        popup_windows.passwords_error_popup(login_frame, "Invalid username or password!")
 
 def change_to_registration_frame(login_frame, registration_frame):
     registration_frame.pack(fill='both', expand=1)
