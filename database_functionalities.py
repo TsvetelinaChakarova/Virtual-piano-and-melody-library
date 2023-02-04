@@ -1,4 +1,5 @@
 import sqlite3
+import hashlib
 
 def create_connection(database_file):
     return sqlite3.connect(database_file)
@@ -15,6 +16,17 @@ def insert_into_user_table(username, password, first_name, last_name, role):
     # print(insert_query)
     database.execute(insert_query)
     database.commit()
+
+def check_username_and_password(inputed_username, inputed_password):
+    cursor = database.cursor()
+    sql_select_query = """select * from users where username = ?"""
+    cursor.execute(sql_select_query, (inputed_username,))
+    records = cursor.fetchall()
+    if records == []:
+        return False
+    for row in records:
+        password_for_inputed_username = (row[1])
+    return hashlib.sha256(inputed_password.encode()).hexdigest() == password_for_inputed_username
 
 database = create_connection("virtual_piano_and_melody_library.db")
 
