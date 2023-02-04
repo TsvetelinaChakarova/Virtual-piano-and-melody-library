@@ -5,3 +5,6 @@ __pycache__/key_buttons.cpython-310.pyc
 __pycache__/play_sound.cpython-310.pyc
 __pycache__/record_melody.cpython-310.pyc
 __pycache__/registration_frame.cpython-310.pyc
+__pycache__/login_frame_functionalities.cpython-310.pyc
+__pycache__/virtual_piano_frame_functionities.cpython-310.pyc
+__pycache__/virtual_piano_frame.cpython-310.pyc
