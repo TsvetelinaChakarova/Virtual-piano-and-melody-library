@@ -2,6 +2,7 @@ import tkinter as tk
 import database_functionalities
 import re
 import hashlib
+import sqlite3
 
 PASSWORD_POPUP_WINDOW_WIDTH = 300
 PASSWORD_POPUP_WINDOW_HEIGHT = 100
@@ -43,10 +44,12 @@ def register(registration_frame, username_input_field, password_input_field, con
     elif bool(re.match(r"^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$", registration_fields_data['password'])) == False:
         passwords_error_popup(registration_frame, "Passwords should have at least 6 symbols \n including capital letter and a number!" )
     else:
-        database_functionalities.insert_into_user_table(registration_fields_data['username'], hashlib.sha256(registration_fields_data['password'].encode()).hexdigest(), 
+        try:
+            database_functionalities.insert_into_user_table(registration_fields_data['username'], hashlib.sha256(registration_fields_data['password'].encode()).hexdigest(), 
                                                         registration_fields_data['first_name'], registration_fields_data['last_name'],
                                                         registration_fields_data['role'])
-
+        except sqlite3.IntegrityError:
+            passwords_error_popup(registration_frame, "This iser name is already taken!")
 
 def create_registration_fields(registration_frame):
     tk.Label(registration_frame, text="username:").pack()
