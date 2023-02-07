@@ -13,7 +13,14 @@ def insert_into_user_table(username, password, first_name, last_name, role):
                           (username, password, first_name, last_name, role) 
                            VALUES 
                           (""" + "'" + username + "','" + password + "','" + first_name + "','" + last_name + "','" + role + "')"
-    # print(insert_query)
+    database.execute(insert_query)
+    database.commit()
+
+def insert_into_global_user_additional_info_table(username, motivation, email):
+    insert_query = """INSERT INTO global_user_additional_info_table
+                          (username, motivation, email) 
+                           VALUES 
+                          (""" + "'" + username + "','" + motivation + "','" + email + "')"
     database.execute(insert_query)
     database.commit()
 
@@ -38,6 +45,13 @@ user_table = """ CREATE TABLE IF NOT EXISTS users (
                                     role text NOT NULL
                                 ); """
 
+global_user_additional_info_table = """CREATE TABLE IF NOT EXISTS global_user_additional_info_table (
+                                username text PRIMARY KEY,
+                                motivation text NOT NULL, 
+                                email text NOT NULL,
+                                FOREIGN KEY (username) REFERENCES users (username)
+                            );"""
+
 melodys_table = """CREATE TABLE IF NOT EXISTS melodys (
                                 name text NOT NULL,
                                 path text NOT NULL,
@@ -48,6 +62,7 @@ melodys_table = """CREATE TABLE IF NOT EXISTS melodys (
                             );"""
 
 create_table(database, user_table)
+create_table(database, global_user_additional_info_table)
 create_table(database, melodys_table)
 
 database.commit()

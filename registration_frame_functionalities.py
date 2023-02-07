@@ -19,9 +19,12 @@ def get_input_fields_data(username_input_field, password_input_field, confirm_pa
     registration_fields_data['last_name'] = last_name_input_field.get()
     registration_fields_data['role'] = menu.get()
 
+def get_global_user_input_fields_data(motivation_input_field, email_input_field):
+    registration_fields_data['motivation'] = motivation_input_field.get()
+    registration_fields_data['email'] = email_input_field.get()
 
 def register(registration_frame, username_input_field, password_input_field, confirm_password_input_field, 
-             first_name_input_field, last_name_input_field, menu):
+             first_name_input_field, last_name_input_field, menu, motivation_input_field, email_input_field):
     get_input_fields_data(username_input_field, password_input_field, confirm_password_input_field, 
                           first_name_input_field, last_name_input_field, menu)
     
@@ -31,8 +34,8 @@ def register(registration_frame, username_input_field, password_input_field, con
          popup_windows.passwords_error_popup(registration_frame, "Select a role!")
     elif registration_fields_data['password'] != registration_fields_data['confirm_password']:
         popup_windows.passwords_error_popup(registration_frame, "Passwords are not matching!")
-    elif bool(re.match(r"^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$", registration_fields_data['password'])) == False:
-        popup_windows.passwords_error_popup(registration_frame, "Passwords should have at least 6 symbols \n including capital letter and a number!" )
+    # elif bool(re.match(r"^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$", registration_fields_data['password'])) == False:
+    #     popup_windows.passwords_error_popup(registration_frame, "Passwords should have at least 6 symbols \n including capital letter and a number!" )
     else:
         try:
             database_functionalities.insert_into_user_table(registration_fields_data['username'], hashlib.sha256(registration_fields_data['password'].encode()).hexdigest(), 
@@ -40,7 +43,10 @@ def register(registration_frame, username_input_field, password_input_field, con
                                                         registration_fields_data['role'])
         except sqlite3.IntegrityError:
             popup_windows.passwords_error_popup(registration_frame, "This iser name is already taken!")
-
+    
+    if registration_fields_data['role'] == "User with global rights":
+        get_global_user_input_fields_data(motivation_input_field, email_input_field)
+        database_functionalities.insert_into_global_user_additional_info_table(registration_fields_data['username'], registration_fields_data['motivation'], registration_fields_data['email'])
 
 def create_registration_fields_for_global_user(menu, motivation_label, motivation_input_field, email_label, email_input_field):
     if menu.get() == "User with global rights":
@@ -90,5 +96,5 @@ def create_registration_fields(registration_frame):
 
     register_button = tk.Button(registration_frame, text="Register", 
                       command=lambda:[register(registration_frame, username_input_field, password_input_field, confirm_password_input_field, 
-                      first_name_input_field, last_name_input_field, menu)])
+                      first_name_input_field, last_name_input_field, menu, motivation_input_field, email_input_field)])
     register_button.place(x = WINDOW_WIDTH/2 - register_button.winfo_width()/2, y=375, anchor='center')
