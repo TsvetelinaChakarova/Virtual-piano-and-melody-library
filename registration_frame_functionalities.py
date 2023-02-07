@@ -7,6 +7,8 @@ import popup_windows
 
 registration_fields_data = {}
 
+WINDOW_WIDTH = 1020
+WINDOW_HEIGHT = 500
 
 def get_input_fields_data(username_input_field, password_input_field, confirm_password_input_field, 
                           first_name_input_field, last_name_input_field, menu):
@@ -39,6 +41,20 @@ def register(registration_frame, username_input_field, password_input_field, con
         except sqlite3.IntegrityError:
             popup_windows.passwords_error_popup(registration_frame, "This iser name is already taken!")
 
+
+def create_registration_fields_for_global_user(menu, motivation_label, motivation_input_field, email_label, email_input_field):
+    if menu.get() == "User with global rights":
+        motivation_label.pack()
+        motivation_input_field.pack()
+        email_label.pack()
+        email_input_field.pack()
+    else:
+        motivation_label.forget()
+        motivation_input_field.pack_forget()
+        email_input_field.pack_forget()
+        email_label.pack_forget()
+
+
 def create_registration_fields(registration_frame):
     tk.Label(registration_frame, text="username:").pack()
     username_input_field = tk.Entry(registration_frame)
@@ -60,13 +76,19 @@ def create_registration_fields(registration_frame):
     last_name_input_field = tk.Entry(registration_frame)
     last_name_input_field.pack()
 
+    motivation_label = tk.Label(registration_frame, text="Why you should be a global user:")
+    motivation_input_field = tk.Entry(registration_frame)
+    
+    email_label = tk.Label(registration_frame, text="Please leave your email so we can contact you for more information:")
+    email_input_field = tk.Entry(registration_frame)
+
     tk.Label(registration_frame, text="role:").pack()
     menu = tk.StringVar()
     menu.set("Select a role")
-    role_dropdown = tk.OptionMenu(registration_frame, menu, "User with global rights", "User with local rights")
+    role_dropdown = tk.OptionMenu(registration_frame, menu, "User with global rights", "User with local rights", command=lambda _ : create_registration_fields_for_global_user(menu, motivation_label, motivation_input_field, email_label, email_input_field))
     role_dropdown.pack()
 
     register_button = tk.Button(registration_frame, text="Register", 
                       command=lambda:[register(registration_frame, username_input_field, password_input_field, confirm_password_input_field, 
                       first_name_input_field, last_name_input_field, menu)])
-    register_button.pack()
+    register_button.place(x = WINDOW_WIDTH/2 - register_button.winfo_width()/2, y=375, anchor='center')
