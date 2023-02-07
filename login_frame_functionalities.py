@@ -13,7 +13,9 @@ def get_input_fields_data(username_input_field, password_input_field):
 
 def change_to_virtual_piano_frame(login_frame, virtual_piano_frame, username_input_field, password_input_field):
     get_input_fields_data(username_input_field, password_input_field)
-    if database_functionalities.check_username_and_password(login_fields_data['username'], login_fields_data['password']):
+    if login_fields_data['username'] == '' or  login_fields_data['password'] == '':
+            popup_windows.passwords_error_popup(login_frame, "Fill in all entry fields!")
+    elif database_functionalities.check_username_and_password(login_fields_data['username'], login_fields_data['password']):
         virtual_piano_frame.pack(fill='both', expand=1)
         login_frame.pack_forget()
     else:

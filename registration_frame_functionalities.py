@@ -27,7 +27,12 @@ def register(registration_frame, username_input_field, password_input_field, con
              first_name_input_field, last_name_input_field, menu, motivation_input_field, email_input_field):
     get_input_fields_data(username_input_field, password_input_field, confirm_password_input_field, 
                           first_name_input_field, last_name_input_field, menu)
+    get_global_user_input_fields_data(motivation_input_field, email_input_field)
     
+    if registration_fields_data['role'] == "User with global rights":
+        if registration_fields_data['motivation'] == '' or  registration_fields_data['email'] == '':
+            popup_windows.passwords_error_popup(registration_frame, "Fill in all entry fields!")
+
     if registration_fields_data['username'] == '' or  registration_fields_data['password'] == '' or registration_fields_data['confirm_password'] == '' or registration_fields_data['first_name'] == '' or registration_fields_data['last_name'] == '':
         popup_windows.passwords_error_popup(registration_frame, "Fill in all entry fields!")
     elif registration_fields_data['role'] == 'Select a role':
@@ -41,12 +46,12 @@ def register(registration_frame, username_input_field, password_input_field, con
             database_functionalities.insert_into_user_table(registration_fields_data['username'], hashlib.sha256(registration_fields_data['password'].encode()).hexdigest(), 
                                                         registration_fields_data['first_name'], registration_fields_data['last_name'],
                                                         registration_fields_data['role'])
+            if registration_fields_data['role'] == "User with global rights":
+                database_functionalities.insert_into_global_user_additional_info_table(registration_fields_data['username'], registration_fields_data['motivation'], registration_fields_data['email'])
         except sqlite3.IntegrityError:
             popup_windows.passwords_error_popup(registration_frame, "This iser name is already taken!")
     
-    if registration_fields_data['role'] == "User with global rights":
-        get_global_user_input_fields_data(motivation_input_field, email_input_field)
-        database_functionalities.insert_into_global_user_additional_info_table(registration_fields_data['username'], registration_fields_data['motivation'], registration_fields_data['email'])
+
 
 def create_registration_fields_for_global_user(menu, motivation_label, motivation_input_field, email_label, email_input_field):
     if menu.get() == "User with global rights":
