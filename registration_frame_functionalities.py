@@ -23,7 +23,11 @@ def register(registration_frame, username_input_field, password_input_field, con
     get_input_fields_data(username_input_field, password_input_field, confirm_password_input_field, 
                           first_name_input_field, last_name_input_field, menu)
     
-    if registration_fields_data['password'] != registration_fields_data['confirm_password']:
+    if registration_fields_data['username'] == '' or  registration_fields_data['password'] == '' or registration_fields_data['confirm_password'] == '' or registration_fields_data['first_name'] == '' or registration_fields_data['last_name'] == '':
+        popup_windows.passwords_error_popup(registration_frame, "Fill in all entry fields!")
+    elif registration_fields_data['role'] == 'Select a role':
+         popup_windows.passwords_error_popup(registration_frame, "Select a role!")
+    elif registration_fields_data['password'] != registration_fields_data['confirm_password']:
         popup_windows.passwords_error_popup(registration_frame, "Passwords are not matching!")
     elif bool(re.match(r"^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$", registration_fields_data['password'])) == False:
         popup_windows.passwords_error_popup(registration_frame, "Passwords should have at least 6 symbols \n including capital letter and a number!" )
