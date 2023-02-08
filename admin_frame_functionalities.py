@@ -5,14 +5,27 @@ import database_functionalities
 def add_global_user(treeview):
     treeview.bind("<<TreeviewSelect>>", get_selected_items_from_treeview(treeview))
 
+
 def get_selected_items_from_treeview(treeview):
     selected_item = treeview.selection()[0]
-    print(treeview.item(selected_item)['values'][0])
-    print(treeview.item(selected_item)['values'][1])
-    print(treeview.item(selected_item)['values'][2])
-    print(treeview.item(selected_item)['values'][3])
-    print(treeview.item(selected_item)['values'][4])
+    
+    cursor = database_functionalities.database.cursor()
+    sql_select_query = """SELECT * FROM requests_for_global_user_table WHERE username = ?"""
+    cursor.execute(sql_select_query, (treeview.item(selected_item)['values'][0],))
+    records = cursor.fetchall()
+    if records == []:
+        return False
+    for row in records:
+        password_for_inputed_username = (row[1])
 
+    database_functionalities.insert_into_user_table(treeview.item(selected_item)['values'][0], password_for_inputed_username, 
+                                                        treeview.item(selected_item)['values'][1], treeview.item(selected_item)['values'][2],
+                                                        "User with global rights")
+    
+    database_functionalities.insert_into_global_user_additional_info_table(treeview.item(selected_item)['values'][0], treeview.item(selected_item)['values'][4], treeview.item(selected_item)['values'][3])
+    sql_delete_query = """DELETE from requests_for_global_user_table where username = ?"""
+    cursor.execute(sql_delete_query, (treeview.item(selected_item)['values'][0],))
+    database_functionalities.database.commit()
 
 def display_requests_for_global_user_table(frame, database): 
     treeview = ttk.Treeview(frame, column=("username", "first_name", "last_name", "email", "motivation"), show='headings')
@@ -39,5 +52,8 @@ def display_requests_for_global_user_table(frame, database):
 
 def create_admin_fields(admin_frame):
     treeview = display_requests_for_global_user_table(admin_frame, database_functionalities.database)
-    button1 = tk.Button(admin_frame, text='Add user', command=lambda:[add_global_user(treeview)])
-    button1.pack()
+    add_global_user_button = tk.Button(admin_frame, text='Add user', command=lambda:[add_global_user(treeview)])
+    add_global_user_button.pack()
+
+    reject_global_user_button = tk.Button(admin_frame, text='Reject user', command=lambda:[add_global_user(treeview)])
+    reject_global_user_button.pack()
