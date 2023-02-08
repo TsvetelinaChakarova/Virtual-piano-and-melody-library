@@ -24,9 +24,17 @@ def insert_into_global_user_additional_info_table(username, motivation, email):
     database.execute(insert_query)
     database.commit()
 
+def insert_into_requests_for_global_user_table(username, password, first_name, last_name, motivation, email):
+    insert_query = """INSERT INTO requests_for_global_user_table
+                          (username, password, first_name, last_name, motivation, email) 
+                           VALUES 
+                          (""" + "'" + username + "','" + password + "','" + first_name + "','" + last_name + "','" + motivation + "','" + email + "')"
+    database.execute(insert_query)
+    database.commit()
+
 def check_username_and_password(inputed_username, inputed_password):
     cursor = database.cursor()
-    sql_select_query = """select * from users where username = ?"""
+    sql_select_query = """SELECT * FROM users WHERE username = ?"""
     cursor.execute(sql_select_query, (inputed_username,))
     records = cursor.fetchall()
     if records == []:
@@ -52,6 +60,15 @@ global_user_additional_info_table = """CREATE TABLE IF NOT EXISTS global_user_ad
                                 FOREIGN KEY (username) REFERENCES users (username)
                             );"""
 
+requests_for_global_user_table = """CREATE TABLE IF NOT EXISTS requests_for_global_user_table (
+                                username text PRIMARY KEY,
+                                password text NOT NULL,
+                                first_name text NOT NULL,
+                                last_name text NOT NULL,
+                                motivation text NOT NULL, 
+                                email text NOT NULL
+                            ); """
+
 melodys_table = """CREATE TABLE IF NOT EXISTS melodys (
                                 name text NOT NULL,
                                 path text NOT NULL,
@@ -63,6 +80,7 @@ melodys_table = """CREATE TABLE IF NOT EXISTS melodys (
 
 create_table(database, user_table)
 create_table(database, global_user_additional_info_table)
+create_table(database, requests_for_global_user_table)
 create_table(database, melodys_table)
 
 database.commit()

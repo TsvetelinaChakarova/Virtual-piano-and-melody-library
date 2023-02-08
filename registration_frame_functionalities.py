@@ -44,11 +44,16 @@ def register(registration_frame, username_input_field, password_input_field, con
     #     popup_windows.passwords_error_popup(registration_frame, "Passwords should have at least 6 symbols \n including capital letter and a number!" )
     else:
         try:
-            database_functionalities.insert_into_user_table(registration_fields_data['username'], hashlib.sha256(registration_fields_data['password'].encode()).hexdigest(), 
+            if registration_fields_data['role'] == "User with global rights":
+                database_functionalities.insert_into_requests_for_global_user_table(registration_fields_data['username'], hashlib.sha256(registration_fields_data['password'].encode()).hexdigest(), 
+                                                        registration_fields_data['first_name'], registration_fields_data['last_name'],
+                                                        registration_fields_data['motivation'], registration_fields_data['email'])
+            
+            else:
+                database_functionalities.insert_into_user_table(registration_fields_data['username'], hashlib.sha256(registration_fields_data['password'].encode()).hexdigest(), 
                                                         registration_fields_data['first_name'], registration_fields_data['last_name'],
                                                         registration_fields_data['role'])
-            if registration_fields_data['role'] == "User with global rights":
-                database_functionalities.insert_into_global_user_additional_info_table(registration_fields_data['username'], registration_fields_data['motivation'], registration_fields_data['email'])
+            
         except sqlite3.IntegrityError:
             popup_windows.passwords_error_popup(registration_frame, "This user name is already taken!")
     
