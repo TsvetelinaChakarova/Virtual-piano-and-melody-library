@@ -32,6 +32,7 @@ def register(registration_frame, username_input_field, password_input_field, con
     if registration_fields_data['role'] == "User with global rights":
         if registration_fields_data['motivation'] == '' or  registration_fields_data['email'] == '':
             popup_windows.passwords_error_popup(registration_frame, "Fill in all entry fields!")
+            return None
 
     if registration_fields_data['username'] == '' or  registration_fields_data['password'] == '' or registration_fields_data['confirm_password'] == '' or registration_fields_data['first_name'] == '' or registration_fields_data['last_name'] == '':
         popup_windows.passwords_error_popup(registration_frame, "Fill in all entry fields!")
@@ -49,7 +50,7 @@ def register(registration_frame, username_input_field, password_input_field, con
             if registration_fields_data['role'] == "User with global rights":
                 database_functionalities.insert_into_global_user_additional_info_table(registration_fields_data['username'], registration_fields_data['motivation'], registration_fields_data['email'])
         except sqlite3.IntegrityError:
-            popup_windows.passwords_error_popup(registration_frame, "This iser name is already taken!")
+            popup_windows.passwords_error_popup(registration_frame, "This user name is already taken!")
     
 
 
