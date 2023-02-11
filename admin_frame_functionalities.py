@@ -5,7 +5,6 @@ import database_functionalities
 class AdminFrame:
     def __init__(self, app):
         self.admin_frame = tk.Frame(app)
-        self.create_admin_fields(self.admin_frame)
 
     def add_global_user(self, treeview):
         treeview.bind("<<TreeviewSelect>>", self.get_selected_items_from_treeview(treeview))
@@ -51,10 +50,18 @@ class AdminFrame:
             treeview.insert("", tk.END, values=row)  
         return treeview
 
-    def create_admin_fields(self, admin_frame):
-        treeview = self.display_requests_for_global_user_table(admin_frame, database_functionalities.database)
-        add_global_user_button = tk.Button(admin_frame, text='Add user', command=lambda:[self.add_global_user(treeview)])
+    def change_to_login_frame(self, login_frame):
+            login_frame.login_frame.pack(fill='both', expand=1)
+            self.admin_frame.pack_forget()
+
+    def create_fields(self, login_frame):
+        treeview = self.display_requests_for_global_user_table(self.admin_frame, database_functionalities.database)
+        add_global_user_button = tk.Button(self.admin_frame, text='Add user', command=lambda:[self.add_global_user(treeview)])
         add_global_user_button.pack()
 
-        reject_global_user_button = tk.Button(admin_frame, text='Reject user', command=lambda:[self.add_global_user(treeview)])
+        reject_global_user_button = tk.Button(self.admin_frame, text='Reject user', command=lambda:[self.add_global_user(treeview)])
         reject_global_user_button.pack()
+
+        logout_button = tk.Button(self.admin_frame, text="Logout", 
+                        command=lambda:[self.change_to_login_frame(login_frame)])
+        logout_button.pack()

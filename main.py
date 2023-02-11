@@ -23,6 +23,9 @@ if __name__ == '__main__':
     size_by_pixel = tk.PhotoImage(width=1, height=1)
     key_buttons.create_key_buttons(virtual_piano_frame.virtual_piano_frame, WINDOW_HEIGHT, size_by_pixel)
 
-    login_frame.create_login_fields(login_frame, registration_frame, virtual_piano_frame, admin_frame)
+    login_frame.create_fields(registration_frame, virtual_piano_frame, admin_frame)
+    registration_frame.create_fields(login_frame)
+    virtual_piano_frame.create_fields(login_frame)
+    admin_frame.create_fields(login_frame)
 
     app.mainloop()
