@@ -32,6 +32,14 @@ def insert_into_requests_for_global_user_table(username, password, first_name, l
     database.execute(insert_query)
     database.commit()
 
+def insert_into_melodys_table(name, path, keywords, creators_username, visibility):
+    insert_query = """INSERT INTO melodys
+                          (name, path, keywords, creators_username, visibility) 
+                           VALUES 
+                          (""" + "'" + name + "','" + path + "','" + keywords + "','" + creators_username + "','" + visibility + "')"
+    database.execute(insert_query)
+    database.commit()
+
 def check_username_and_password(inputed_username, inputed_password):
     cursor = database.cursor()
     sql_select_query = """SELECT * FROM users WHERE username = ?"""
@@ -42,6 +50,17 @@ def check_username_and_password(inputed_username, inputed_password):
     for row in records:
         password_for_inputed_username = (row[1])
     return hashlib.sha256(inputed_password.encode()).hexdigest() == password_for_inputed_username
+
+def get_role_from_username(username):
+    cursor = database.cursor()
+    sql_select_query = """SELECT * FROM users WHERE username = ?"""
+    cursor.execute(sql_select_query, (username,))
+    records = cursor.fetchall()
+    if records == []:
+        return False
+    for row in records:
+        role_for_user = (row[4])
+    return role_for_user
 
 database = create_connection("virtual_piano_and_melody_library.db")
 
@@ -72,6 +91,7 @@ requests_for_global_user_table = """CREATE TABLE IF NOT EXISTS requests_for_glob
 melodys_table = """CREATE TABLE IF NOT EXISTS melodys (
                                 name text NOT NULL,
                                 path text NOT NULL,
+                                keywords text NOT NULL,
                                 creators_username text NOT NULL,
                                 visibility integer NOT NULL,
                                 PRIMARY KEY (name, creators_username)

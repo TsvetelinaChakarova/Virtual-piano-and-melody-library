@@ -4,6 +4,7 @@ import login_frame_functionalities
 import admin_frame_functionalities
 import virtual_piano_frame_functionities
 import key_buttons
+import record_melody
 
 WINDOW_WIDTH = 1020
 WINDOW_HEIGHT = 500
