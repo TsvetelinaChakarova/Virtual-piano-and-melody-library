@@ -7,9 +7,9 @@ class AdminFrame:
         self.admin_frame = tk.Frame(app)
 
     def add_global_user(self, treeview):
-        treeview.bind("<<TreeviewSelect>>", self.get_selected_items_from_treeview(treeview))
+        treeview.bind("<<TreeviewSelect>>", self.add_global_user_help_function(treeview))
 
-    def get_selected_items_from_treeview(self, treeview):
+    def add_global_user_help_function(self, treeview):
         selected_item = treeview.selection()[0]
         cursor = database_functionalities.database.cursor()
         sql_select_query = """SELECT * FROM requests_for_global_user_table WHERE username = ?"""
@@ -28,8 +28,21 @@ class AdminFrame:
         cursor.execute(sql_delete_query, (treeview.item(selected_item)['values'][0],))
         database_functionalities.database.commit()
 
-    def display_requests_for_global_user_table(self, frame, database): 
-        treeview = ttk.Treeview(frame, column=("username", "first_name", "last_name", "email", "motivation"), show='headings')
+    def reject_global_user(self, treeview):
+        treeview.bind("<<TreeviewSelect>>", self.reject_global_user_help_function(treeview))
+
+    def reject_global_user_help_function(self, treeview):
+        selected_item = treeview.selection()[0]
+        cursor = database_functionalities.database.cursor()
+        sql_select_query = """SELECT * FROM requests_for_global_user_table WHERE username = ?"""
+        cursor.execute(sql_select_query, (treeview.item(selected_item)['values'][0],))
+
+        sql_delete_query = """DELETE from requests_for_global_user_table where username = ?"""
+        cursor.execute(sql_delete_query, (treeview.item(selected_item)['values'][0],))
+        database_functionalities.database.commit()
+
+    def display_requests_for_global_user_table(self, database): 
+        treeview = ttk.Treeview(self.admin_frame, column=("username", "first_name", "last_name", "email", "motivation"), show='headings')
         treeview["columns"] = ("username", "first_name", "last_name", "email", "motivation")
         treeview.column("username", anchor=tk.CENTER)
         treeview.heading("username", text="Username")
@@ -42,7 +55,7 @@ class AdminFrame:
         treeview.column("motivation", anchor=tk.CENTER)
         treeview.heading("motivation", text="Motivation")
         treeview.pack()
-
+        
         cursor = database.cursor()
         cursor.execute("""SELECT username, first_name, last_name, email, motivation FROM requests_for_global_user_table""")
         rows = cursor.fetchall()    
@@ -50,18 +63,24 @@ class AdminFrame:
             treeview.insert("", tk.END, values=row)  
         return treeview
 
+    def refresh_admin_frame(self, treeview, database):
+        treeview.pack_forget()
+        self.display_requests_for_global_user_table(database)  
+
     def change_to_login_frame(self, login_frame):
-            login_frame.login_frame.pack(fill='both', expand=1)
-            self.admin_frame.pack_forget()
+        login_frame.login_frame.pack(fill='both', expand=1)
+        self.admin_frame.pack_forget()
 
     def create_fields(self, login_frame):
-        treeview = self.display_requests_for_global_user_table(self.admin_frame, database_functionalities.database)
-        add_global_user_button = tk.Button(self.admin_frame, text='Add user', command=lambda:[self.add_global_user(treeview)])
+        add_global_user_button = tk.Button(self.admin_frame, text='Add user', command=lambda:[self.add_global_user(treeview), self.refresh_admin_frame(treeview, database_functionalities.database)])
         add_global_user_button.pack()
 
-        reject_global_user_button = tk.Button(self.admin_frame, text='Reject user', command=lambda:[self.add_global_user(treeview)])
+        reject_global_user_button = tk.Button(self.admin_frame, text='Reject user', command=lambda:[self.reject_global_user(treeview), self.refresh_admin_frame(treeview, database_functionalities.database)])
         reject_global_user_button.pack()
 
         logout_button = tk.Button(self.admin_frame, text="Logout", 
                         command=lambda:[self.change_to_login_frame(login_frame)])
         logout_button.pack()
+        
+        treeview = self.display_requests_for_global_user_table(database_functionalities.database)
+        

@@ -60,6 +60,8 @@ class RegistrationFrame:
             except sqlite3.IntegrityError:
                 popup_windows.passwords_error_popup(self.registration_frame, "This user name is already taken!")
         
+        database_functionalities.database.commit()
+
     def change_to_login_frame(self, login_frame):
             login_frame.login_frame.pack(fill='both', expand=1)
             self.registration_frame.pack_forget()
