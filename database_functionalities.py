@@ -62,6 +62,18 @@ def get_role_from_username(username):
         role_for_user = (row[4])
     return role_for_user
 
+def get_users_melodies(creators_username):
+    cursor = database.cursor()
+    sql_select_query = """SELECT name FROM melodys WHERE creators_username = ?"""
+    cursor.execute(sql_select_query, (creators_username,))
+    records = cursor.fetchall()
+    if records == []:
+        return False
+    melodies_names = []
+    for row in records:
+        melodies_names.append(row[0])
+    return melodies_names
+
 database = create_connection("virtual_piano_and_melody_library.db")
 
 user_table = """ CREATE TABLE IF NOT EXISTS users (

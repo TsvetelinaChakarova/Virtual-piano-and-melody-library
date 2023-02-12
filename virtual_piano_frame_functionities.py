@@ -1,5 +1,6 @@
 import tkinter as tk
 import record_melody
+import database_functionalities
 
 WINDOW_HEIGHT = 500
 
@@ -14,6 +15,7 @@ class VirtualPianoFrame:
 
     def change_to_view_melodies_frame(self, view_melodies_frame):
         view_melodies_frame.view_melodies_frame.pack(fill='both', expand=1)
+        view_melodies_frame.display_users_melodies(database_functionalities.database)
         self.virtual_piano_frame.pack_forget()
 
     def create_fields(self, login_frame, view_melodies_frame):
