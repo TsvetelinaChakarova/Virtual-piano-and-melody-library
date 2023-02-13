@@ -106,7 +106,7 @@ melodys_table = """CREATE TABLE IF NOT EXISTS melodys (
                                 keywords text NOT NULL,
                                 creators_username text NOT NULL,
                                 visibility integer NOT NULL,
-                                PRIMARY KEY (name, creators_username)
+                                PRIMARY KEY (name, creators_username),
                                 FOREIGN KEY (creators_username) REFERENCES users (username)
                             );"""
 

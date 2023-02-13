@@ -23,7 +23,7 @@ def save_melody(melody_name_input_field, melody_keywords_input_field):
     if not isExist:
         os.makedirs(path)
     combined_notes.export(path + '/' + melody_name + '.wav', format="wav")
-    database_functionalities.insert_into_melodys_table(melody_name, melody_name + '.wav', melody_keywords, login_frame_functionalities.current_user_username, login_frame_functionalities.current_user_role)
+    database_functionalities.insert_into_melodys_table(melody_name, path + '/' + melody_name + '.wav', melody_keywords, login_frame_functionalities.current_user_username, login_frame_functionalities.current_user_role)
 
 # create and open a popup window with input field for melody's name
 def save_melody_popup_window(app):
