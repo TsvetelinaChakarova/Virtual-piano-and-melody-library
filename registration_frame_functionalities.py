@@ -51,17 +51,15 @@ class RegistrationFrame:
                     database_functionalities.insert_into_requests_for_global_user_table(self.registration_fields_data['username'], hashlib.sha256(self.registration_fields_data['password'].encode()).hexdigest(), 
                                                             self.registration_fields_data['first_name'], self.registration_fields_data['last_name'],
                                                             self.registration_fields_data['motivation'], self.registration_fields_data['email'])
-                
+                    database_functionalities.database.commit()
                 else:
                     database_functionalities.insert_into_user_table(self.registration_fields_data['username'], hashlib.sha256(self.registration_fields_data['password'].encode()).hexdigest(), 
                                                             self.registration_fields_data['first_name'], self.registration_fields_data['last_name'],
                                                             self.registration_fields_data['role'])
-                
+                    database_functionalities.database.commit()
             except sqlite3.IntegrityError:
                 popup_windows.passwords_error_popup(self.registration_frame, "This user name is already taken!")
         
-        database_functionalities.database.commit()
-
     def change_to_login_frame(self, login_frame):
             login_frame.login_frame.pack(fill='both', expand=1)
             self.registration_frame.pack_forget()
