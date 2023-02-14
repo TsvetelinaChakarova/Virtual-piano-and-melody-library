@@ -74,6 +74,18 @@ def get_users_melodies(creators_username):
         melodies_names.append(row[0])
     return melodies_names
 
+def get_global_melodies():
+    cursor = database.cursor()
+    sql_select_query = """SELECT name FROM melodys WHERE visibility = ?"""
+    cursor.execute(sql_select_query, ("User with global rights",))
+    records = cursor.fetchall()
+    if records == []:
+        return False
+    melodies_names = []
+    for row in records:
+        melodies_names.append(row[0])
+    return melodies_names
+
 database = create_connection("virtual_piano_and_melody_library.db")
 
 user_table = """ CREATE TABLE IF NOT EXISTS users (

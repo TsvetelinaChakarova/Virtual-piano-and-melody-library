@@ -21,7 +21,7 @@ class ViewGlobalMelodiesFrame:
         self.treeview.heading("melody_name", text="Melody name")
         self.treeview.pack()
         
-        melodies = database_functionalities.get_users_melodies(login_frame_functionalities.current_user_username)
+        melodies = database_functionalities.get_global_melodies()
         for melody in melodies:
             self.treeview.insert("", tk.END, melody, text=melody, values=(melody,))
         return self.treeview

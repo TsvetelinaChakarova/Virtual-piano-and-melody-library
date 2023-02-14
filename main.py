@@ -32,5 +32,6 @@ if __name__ == '__main__':
     virtual_piano_frame.create_fields(login_frame, view_melody_frame, view_global_melody_frame)
     admin_frame.create_fields(login_frame)
     view_melody_frame.create_fields(virtual_piano_frame)
+    view_global_melody_frame.create_fields(virtual_piano_frame)
 
     app.mainloop()
