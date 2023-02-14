@@ -18,7 +18,7 @@ class VirtualPianoFrame:
         view_melodies_frame.display_users_melodies(database_functionalities.database)
         self.virtual_piano_frame.pack_forget()
 
-    def create_fields(self, login_frame, view_melodies_frame):
+    def create_fields(self, login_frame, view_melodies_frame, view_global_melodies_frame):
         record_melody_button = tk.Button(self.virtual_piano_frame, text='Record a melody', command=lambda:[record_melody.record_melody()])
         record_melody_button.pack()
 
@@ -29,6 +29,10 @@ class VirtualPianoFrame:
         view_melodies_button = tk.Button(self.virtual_piano_frame, text="View melodies", 
                         command=lambda:[self.change_to_view_melodies_frame(view_melodies_frame)])
         view_melodies_button.pack()
+
+        view_global_melodies_button = tk.Button(self.virtual_piano_frame, text="View global melodies", 
+                        command=lambda:[self.change_to_view_melodies_frame(view_global_melodies_frame)])
+        view_global_melodies_button.pack()
 
         logout_button = tk.Button(self.virtual_piano_frame, text="Logout", 
                         command=lambda:[self.change_to_login_frame(login_frame)])
