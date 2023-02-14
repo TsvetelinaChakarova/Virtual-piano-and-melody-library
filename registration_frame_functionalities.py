@@ -27,22 +27,22 @@ class RegistrationFrame:
         self.registration_fields_data['email'] = email_input_field.get()
 
     def register(self, username_input_field, password_input_field, confirm_password_input_field, 
-                first_name_input_field, last_name_input_field, menu, motivation_input_field, email_input_field):
+                first_name_input_field, last_name_input_field, menu, motivation_input_field, email_input_field, login_frame):
         self.get_input_fields_data(username_input_field, password_input_field, confirm_password_input_field, 
                             first_name_input_field, last_name_input_field, menu)
         self.get_global_user_input_fields_data(motivation_input_field, email_input_field)
         
         if self.registration_fields_data['role'] == "User with global rights":
             if self.registration_fields_data['motivation'] == '' or  self.registration_fields_data['email'] == '':
-                popup_windows.passwords_error_popup(self.registration_frame, "Fill in all entry fields!")
+                popup_windows.popup_window(self.registration_frame, "Fill in all entry fields!", "Try again!")
                 return None
 
         if self.registration_fields_data['username'] == '' or  self.registration_fields_data['password'] == '' or self.registration_fields_data['confirm_password'] == '' or self.registration_fields_data['first_name'] == '' or self.registration_fields_data['last_name'] == '':
-            popup_windows.passwords_error_popup(self.registration_frame, "Fill in all entry fields!")
+            popup_windows.popup_window(self.registration_frame, "Fill in all entry fields!", "Try again!")
         elif self.registration_fields_data['role'] == 'Select a role':
-            popup_windows.passwords_error_popup(self.registration_frame, "Select a role!")
+            popup_windows.popup_window(self.registration_frame, "Select a role!", "Try again!")
         elif self.registration_fields_data['password'] != self.registration_fields_data['confirm_password']:
-            popup_windows.passwords_error_popup(self.registration_frame, "Passwords are not matching!")
+            popup_windows.popup_window(self.registration_frame, "Passwords are not matching!", "Try again!")
         # elif bool(re.match(r"^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$", registration_fields_data['password'])) == False:
         #     popup_windows.passwords_error_popup(registration_frame, "Passwords should have at least 6 symbols \n including capital letter and a number!" )
         else:
@@ -52,13 +52,17 @@ class RegistrationFrame:
                                                             self.registration_fields_data['first_name'], self.registration_fields_data['last_name'],
                                                             self.registration_fields_data['motivation'], self.registration_fields_data['email'])
                     database_functionalities.database.commit()
+                    popup_windows.popup_window(self.registration_frame, "Successfully send request!", "Continue")
+                    self.change_to_login_frame(login_frame)
                 else:
                     database_functionalities.insert_into_user_table(self.registration_fields_data['username'], hashlib.sha256(self.registration_fields_data['password'].encode()).hexdigest(), 
                                                             self.registration_fields_data['first_name'], self.registration_fields_data['last_name'],
                                                             self.registration_fields_data['role'])
                     database_functionalities.database.commit()
+                    popup_windows.popup_window(self.registration_frame, "Successful registration!", "Continue")
+                    self.change_to_login_frame(login_frame)
             except sqlite3.IntegrityError:
-                popup_windows.passwords_error_popup(self.registration_frame, "This user name is already taken!")
+                popup_windows.popup_window(self.registration_frame, "This user name is already taken!", "Try again!")
         
     def change_to_login_frame(self, login_frame):
             login_frame.login_frame.pack(fill='both', expand=1)
@@ -111,7 +115,7 @@ class RegistrationFrame:
 
         register_button = tk.Button(self.registration_frame, text="Register", 
                         command=lambda:[self.register(username_input_field, password_input_field, confirm_password_input_field, 
-                        first_name_input_field, last_name_input_field, menu, motivation_input_field, email_input_field)])
+                        first_name_input_field, last_name_input_field, menu, motivation_input_field, email_input_field, login_frame)])
         register_button.place(x = WINDOW_WIDTH/2 - register_button.winfo_width()/2, y=375, anchor='center')
 
         go_back_button = tk.Button(self.registration_frame, text="Go back", 

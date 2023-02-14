@@ -25,7 +25,7 @@ class LoginFrame:
     def change_frame_after_login(self, virtual_piano_frame, admin_frame, username_input_field, password_input_field):
         self.get_input_fields_data(username_input_field, password_input_field)
         if self.login_fields_data['username'] == '' or  self.login_fields_data['password'] == '':
-            popup_windows.passwords_error_popup(self.login_frame, "Fill in all entry fields!")
+            popup_windows.popup_window(self.login_frame, "Fill in all entry fields!", "Try again!")
         elif self.login_fields_data['username'] == 'Admin' and database_functionalities.check_username_and_password(self.login_fields_data['username'], self.login_fields_data['password']):
             admin_frame.pack(fill='both', expand=1)
             self.login_frame.pack_forget()
@@ -33,7 +33,7 @@ class LoginFrame:
             virtual_piano_frame.pack(fill='both', expand=1)
             self.login_frame.pack_forget()
         else:
-            popup_windows.passwords_error_popup(self.login_frame, "Invalid username or password!")
+            popup_windows.popup_window(self.login_frame, "Invalid username or password!", "Try again!")
 
     def change_to_registration_frame(self, registration_frame):
         registration_frame.registration_frame.pack(fill='both', expand=1)

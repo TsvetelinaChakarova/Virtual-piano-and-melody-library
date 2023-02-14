@@ -33,9 +33,15 @@ def save_melody_popup_window(app):
     save_melody_popup_window.minsize(SAVE_MELODY_POPUP_WINDOW_WIDTH, SAVE_MELODY_POPUP_WINDOW_HEIGHT)
     save_melody_popup_window.maxsize(SAVE_MELODY_POPUP_WINDOW_WIDTH, SAVE_MELODY_POPUP_WINDOW_HEIGHT)
     save_melody_popup_window.title("Save melody")
-    
+
+    melody_name_label = tk.Label(save_melody_popup_window, text="Melody name:")
+    melody_name_label.pack()
+
     melody_name_input_field = tk.Text(save_melody_popup_window, height=MELODY_NAME_INPUT_FIELD_HEIGHT, width=MELODY_NAME_INPUT_FIELD_WIDTH)
     melody_name_input_field.pack()   
+    
+    melody_keywords_label = tk.Label(save_melody_popup_window, text="Melody keywords:")
+    melody_keywords_label.pack()
 
     melody_keywords_input_field = tk.Text(save_melody_popup_window, height=MELODY_NAME_INPUT_FIELD_HEIGHT, width=MELODY_NAME_INPUT_FIELD_WIDTH)
     melody_keywords_input_field.pack() 
