@@ -1,7 +1,7 @@
 import tkinter as tk
 
-PASSWORD_POPUP_WINDOW_WIDTH = 300
-PASSWORD_POPUP_WINDOW_HEIGHT = 100
+PASSWORD_POPUP_WINDOW_WIDTH = 500
+PASSWORD_POPUP_WINDOW_HEIGHT = 150
 
 def close_window(window):
     window.destroy()

@@ -50,13 +50,15 @@ def save_melody_popup_window(app):
     melody_keywords_input_field = tk.Text(save_melody_popup_window, height=MELODY_NAME_INPUT_FIELD_HEIGHT, width=MELODY_NAME_INPUT_FIELD_WIDTH)
     melody_keywords_input_field.pack() 
     
+    tk.Label(save_melody_popup_window, text="Save melody as:").pack()
+    menu = tk.StringVar()
+    menu.set("Select")
     if login_frame_functionalities.current_user_role == "User with global rights":
-        tk.Label(save_melody_popup_window, text="Save melody as:").pack()
-        menu = tk.StringVar()
-        menu.set("Select")
         save_as_dropdown = tk.OptionMenu(save_melody_popup_window, menu, "Save as global melody", "Save as local melody")
-        save_as_dropdown.pack()
-    
+    else:
+        save_as_dropdown = tk.OptionMenu(save_melody_popup_window, menu, "Save as local melody")
+    save_as_dropdown.pack()
+
     save_melody_button = tk.Button(save_melody_popup_window, text="Save melody", command=lambda:[save_melody(save_melody_popup_window, melody_name_input_field, melody_keywords_input_field, menu)])
     save_melody_button.pack()
 

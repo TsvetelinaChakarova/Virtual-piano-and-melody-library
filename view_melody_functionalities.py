@@ -4,7 +4,7 @@ import database_functionalities
 import login_frame_functionalities
 from playsound import playsound
 from os import chdir
-import record_melody
+import record_melody_by_pressing_keys
 import pygame
 
 WINDOW_HEIGHT = 500
@@ -21,9 +21,11 @@ class ViewMelodiesFrame:
         self.treeview.heading("melody_name", text="Melody name")
         self.treeview.pack()
         
-        melodies = database_functionalities.get_users_melodies(login_frame_functionalities.current_user_username)
-        for melody in melodies:
-            self.treeview.insert("", tk.END, melody, text=melody, values=(melody,))
+        cursor = database.cursor()
+        cursor.execute("""SELECT name FROM melodys WHERE creators_username = '""" + login_frame_functionalities.current_user_username + """'""")
+        rows = cursor.fetchall()    
+        for row in rows:
+            self.treeview.insert("", tk.END, values=row)  
         return self.treeview
 
     def play_melody(self):
