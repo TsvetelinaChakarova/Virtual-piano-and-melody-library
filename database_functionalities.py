@@ -76,7 +76,7 @@ def get_users_melodies(creators_username):
 
 def get_global_melodies():
     cursor = database.cursor()
-    sql_select_query = """SELECT name FROM melodys WHERE visibility = ?"""
+    sql_select_query = """SELECT name, creators_username FROM melodys WHERE visibility = ?"""
     cursor.execute(sql_select_query, ("User with global rights",))
     records = cursor.fetchall()
     if records == []:

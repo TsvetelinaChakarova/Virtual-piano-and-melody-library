@@ -16,19 +16,28 @@ class ViewGlobalMelodiesFrame:
         self.treeview = ttk.Treeview(self.view_melodies_frame, column=("melody_name"), show='headings')
 
     def display_users_melodies(self, database): 
-        self.treeview["columns"] = ("melody_name")
+        self.treeview["columns"] = ("melody_name", "creators_name")
         self.treeview.column("melody_name", anchor=tk.CENTER)
         self.treeview.heading("melody_name", text="Melody name")
+        self.treeview.column("creators_name", anchor=tk.CENTER)
+        self.treeview.heading("creators_name", text="Creators name")
         self.treeview.pack()
         
-        melodies = database_functionalities.get_global_melodies()
-        for melody in melodies:
-            self.treeview.insert("", tk.END, melody, text=melody, values=(melody,))
+        cursor = database.cursor()
+        cursor.execute("""SELECT name, creators_username FROM melodys WHERE visibility = 'User with global rights'""")
+        rows = cursor.fetchall()    
+        for row in rows:
+            self.treeview.insert("", tk.END, values=row)  
         return self.treeview
 
     def play_melody(self):
         selected_item = self.treeview.selection()
-        path_to_melody = "Melodys\\" + login_frame_functionalities.current_user_username + "\\" + selected_item[0] + ".wav"
+        cursor = database_functionalities.database.cursor()
+        cursor.execute("""SELECT path FROM melodys WHERE creators_username = '""" + self.treeview.item(selected_item)['values'][1] + """' AND name = '""" + self.treeview.item(selected_item)['values'][0] + """'""")
+        for row in cursor:
+            for record in row:
+                path_to_melody = record
+
         pygame.mixer.init()
         my_sound = pygame.mixer.Sound(path_to_melody)
         my_sound.play()
