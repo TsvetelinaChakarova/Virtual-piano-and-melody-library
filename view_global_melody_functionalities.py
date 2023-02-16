@@ -50,10 +50,14 @@ class ViewGlobalMelodiesFrame:
     def search_melody(self, search_input_field):
         self.treeview.destroy()
         self.create_treeview()
-        keyword = search_input_field.get()
+        keywords = search_input_field.get()
+        query = ""
+        for keyword in keywords.split(" "):
+            query += "SELECT name, creators_username FROM melodys WHERE visibility = 'User with global rights' AND (keywords LIKE '" + keyword + " %' or keywords LIKE '% " + keyword + "' or keywords LIKE '% " + keyword + " %' or keywords LIKE '" + keyword + "') UNION "
+        query = query.removesuffix(" UNION ")
+        
         cursor = database_functionalities.database.cursor()
-        cursor = cursor.execute(
-            "SELECT name, creators_username FROM melodys WHERE visibility = 'User with global rights' AND (keywords LIKE '" + keyword + " %' or keywords LIKE '% " + keyword + "' or keywords LIKE '% " + keyword + " %' or keywords LIKE '" + keyword + "')")
+        cursor = cursor.execute(query)
         rows = cursor.fetchall()
         for row in rows:
             self.treeview.insert("", tk.END, values=row)

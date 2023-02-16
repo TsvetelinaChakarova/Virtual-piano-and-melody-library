@@ -43,11 +43,15 @@ class ViewMelodiesFrame:
 
     def search_melody(self, search_input_field):
         self.treeview.destroy()
-        self.create_treeview()
-        keyword = search_input_field.get()
+        self.create_treeview()        
+        keywords = search_input_field.get()
+        query = ""
+        for keyword in keywords.split(" "):
+            query +=  "SELECT name FROM melodys WHERE creators_username = '" + login_frame_functionalities.current_user_username + "' AND (keywords LIKE '" + keyword + " %' or keywords LIKE '% " + keyword + "' or keywords LIKE '% " + keyword + " %' or keywords LIKE '" + keyword + "') UNION "
+        query = query.removesuffix(" UNION ")
+
         cursor = database_functionalities.database.cursor()
-        cursor = cursor.execute(
-            "SELECT name FROM melodys WHERE creators_username = '" + login_frame_functionalities.current_user_username + "' AND (keywords LIKE '" + keyword + " %' or keywords LIKE '% " + keyword + "' or keywords LIKE '% " + keyword + " %' or keywords LIKE '" + keyword + "')")
+        cursor = cursor.execute(query)
         rows = cursor.fetchall()
         for row in rows:
             self.treeview.insert("", tk.END, values=row)

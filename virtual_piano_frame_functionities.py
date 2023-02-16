@@ -18,7 +18,7 @@ class VirtualPianoFrame:
 
     def change_to_view_melodies_frame(self, view_melodies_frame):
         view_melodies_frame.treeview.destroy()
-        view_melodies_frame.treeview = view_melodies_frame.display_users_melodies(database_functionalities.database)
+        view_melodies_frame.treeview = view_melodies_frame.display_users_melodies()
         view_melodies_frame.view_melodies_frame.pack()
         self.virtual_piano_frame.pack_forget()
 
