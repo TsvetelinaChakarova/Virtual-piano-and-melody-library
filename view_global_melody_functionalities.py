@@ -1,10 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
 import database_functionalities
-import login_frame_functionalities
-from playsound import playsound
-from os import chdir
-import record_melody_by_pressing_keys
 import pygame
 
 WINDOW_HEIGHT = 500
