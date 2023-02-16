@@ -1,12 +1,15 @@
 import sqlite3
 import hashlib
 
+
 def create_connection(database_file):
     return sqlite3.connect(database_file)
+
 
 def create_table(database, table):
     cursor = database.cursor()
     cursor.execute(table)
+
 
 database = create_connection("virtual_piano_and_melody_library.db")
 
@@ -51,6 +54,7 @@ create_table(database, melodys_table)
 
 database.commit()
 
+
 def insert_into_user_table(username, password, first_name, last_name, role):
     insert_query = """INSERT INTO users
                           (username, password, first_name, last_name, role) 
@@ -58,6 +62,7 @@ def insert_into_user_table(username, password, first_name, last_name, role):
                           (""" + "'" + username + "','" + password + "','" + first_name + "','" + last_name + "','" + role + "')"
     database.execute(insert_query)
     database.commit()
+
 
 def insert_into_global_user_additional_info_table(username, motivation, email):
     insert_query = """INSERT INTO global_user_additional_info_table
@@ -67,6 +72,7 @@ def insert_into_global_user_additional_info_table(username, motivation, email):
     database.execute(insert_query)
     database.commit()
 
+
 def insert_into_requests_for_global_user_table(username, password, first_name, last_name, motivation, email):
     insert_query = """INSERT INTO requests_for_global_user_table
                           (username, password, first_name, last_name, motivation, email) 
@@ -75,6 +81,7 @@ def insert_into_requests_for_global_user_table(username, password, first_name, l
     database.execute(insert_query)
     database.commit()
 
+
 def insert_into_melodys_table(name, path, keywords, creators_username, visibility):
     insert_query = """INSERT INTO melodys
                           (name, path, keywords, creators_username, visibility) 
@@ -82,6 +89,7 @@ def insert_into_melodys_table(name, path, keywords, creators_username, visibilit
                           (""" + "'" + name + "','" + path + "','" + keywords + "','" + creators_username + "','" + visibility + "')"
     database.execute(insert_query)
     database.commit()
+
 
 def check_username_and_password(inputed_username, inputed_password):
     cursor = database.cursor()
@@ -93,6 +101,7 @@ def check_username_and_password(inputed_username, inputed_password):
     for row in records:
         password_for_inputed_username = (row[1])
     return hashlib.sha256(inputed_password.encode()).hexdigest() == password_for_inputed_username
+
 
 def get_role_from_username(username):
     cursor = database.cursor()

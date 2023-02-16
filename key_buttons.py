@@ -19,7 +19,6 @@ def which_button_is_pressed(button_press):
 
 
 def create_key_buttons(app, WINDOW_HEIGHT, size_by_pixel):
-
     # set white piano keys as buttons
 
     C3_key = tk.Button(
@@ -48,7 +47,7 @@ def create_key_buttons(app, WINDOW_HEIGHT, size_by_pixel):
         anchor='s',
         command=lambda: [play_sound.play_D3(), which_button_is_pressed('D3')],
     )
-    D3_key.place( x=WHITE_PIANO_KEY_WIDTH * 1, y=WINDOW_HEIGHT - WHITE_PIANO_KEY_HEIGHT)
+    D3_key.place(x=WHITE_PIANO_KEY_WIDTH * 1, y=WINDOW_HEIGHT - WHITE_PIANO_KEY_HEIGHT)
 
     E3_key = tk.Button(
         app,
@@ -258,7 +257,7 @@ def create_key_buttons(app, WINDOW_HEIGHT, size_by_pixel):
         anchor='s',
         command=lambda: [play_sound.play_E5(), which_button_is_pressed('E5')],
     )
-    E5_key.place(x=WHITE_PIANO_KEY_WIDTH * 16, y=WINDOW_HEIGHT  - WHITE_PIANO_KEY_HEIGHT)
+    E5_key.place(x=WHITE_PIANO_KEY_WIDTH * 16, y=WINDOW_HEIGHT - WHITE_PIANO_KEY_HEIGHT)
 
     # set black piano keys as buttons
 
@@ -309,7 +308,7 @@ def create_key_buttons(app, WINDOW_HEIGHT, size_by_pixel):
         command=lambda: [play_sound.play_Fs3(), which_button_is_pressed('F#3')],
     )
     Fs3_key.place(
-        x=WHITE_PIANO_KEY_WIDTH * 3 + WHITE_PIANO_KEY_WIDTH - BLACK_PIANO_KEY_WIDTH / 2, 
+        x=WHITE_PIANO_KEY_WIDTH * 3 + WHITE_PIANO_KEY_WIDTH - BLACK_PIANO_KEY_WIDTH / 2,
         y=WINDOW_HEIGHT - WHITE_PIANO_KEY_HEIGHT
     )
 
@@ -326,7 +325,7 @@ def create_key_buttons(app, WINDOW_HEIGHT, size_by_pixel):
         command=lambda: [play_sound.play_Gs3(), which_button_is_pressed('G#3')],
     )
     Gs3_key.place(
-        x=WHITE_PIANO_KEY_WIDTH * 4 + WHITE_PIANO_KEY_WIDTH - BLACK_PIANO_KEY_WIDTH / 2, 
+        x=WHITE_PIANO_KEY_WIDTH * 4 + WHITE_PIANO_KEY_WIDTH - BLACK_PIANO_KEY_WIDTH / 2,
         y=WINDOW_HEIGHT - WHITE_PIANO_KEY_HEIGHT
     )
 
@@ -343,7 +342,7 @@ def create_key_buttons(app, WINDOW_HEIGHT, size_by_pixel):
         command=lambda: [play_sound.play_As3(), which_button_is_pressed('A#3')],
     )
     As3_key.place(
-        x=WHITE_PIANO_KEY_WIDTH * 5 + WHITE_PIANO_KEY_WIDTH - BLACK_PIANO_KEY_WIDTH / 2, 
+        x=WHITE_PIANO_KEY_WIDTH * 5 + WHITE_PIANO_KEY_WIDTH - BLACK_PIANO_KEY_WIDTH / 2,
         y=WINDOW_HEIGHT - WHITE_PIANO_KEY_HEIGHT
     )
 
@@ -361,7 +360,7 @@ def create_key_buttons(app, WINDOW_HEIGHT, size_by_pixel):
                          which_button_is_pressed('C#4')],
     )
     Cs4_key.place(
-        x=WHITE_PIANO_KEY_WIDTH * 7 + WHITE_PIANO_KEY_WIDTH - BLACK_PIANO_KEY_WIDTH / 2, 
+        x=WHITE_PIANO_KEY_WIDTH * 7 + WHITE_PIANO_KEY_WIDTH - BLACK_PIANO_KEY_WIDTH / 2,
         y=WINDOW_HEIGHT - WHITE_PIANO_KEY_HEIGHT
     )
 
@@ -378,7 +377,7 @@ def create_key_buttons(app, WINDOW_HEIGHT, size_by_pixel):
         command=lambda: [play_sound.play_Ds4(), which_button_is_pressed('D#4')],
     )
     Ds4_key.place(
-        x=WHITE_PIANO_KEY_WIDTH * 8 + WHITE_PIANO_KEY_WIDTH - BLACK_PIANO_KEY_WIDTH / 2, 
+        x=WHITE_PIANO_KEY_WIDTH * 8 + WHITE_PIANO_KEY_WIDTH - BLACK_PIANO_KEY_WIDTH / 2,
         y=WINDOW_HEIGHT - WHITE_PIANO_KEY_HEIGHT
     )
 
@@ -395,7 +394,7 @@ def create_key_buttons(app, WINDOW_HEIGHT, size_by_pixel):
         command=lambda: [play_sound.play_Fs4(), which_button_is_pressed('F#4')],
     )
     Fs4_key.place(
-        x=WHITE_PIANO_KEY_WIDTH * 10 + WHITE_PIANO_KEY_WIDTH - BLACK_PIANO_KEY_WIDTH / 2,  
+        x=WHITE_PIANO_KEY_WIDTH * 10 + WHITE_PIANO_KEY_WIDTH - BLACK_PIANO_KEY_WIDTH / 2,
         y=WINDOW_HEIGHT - WHITE_PIANO_KEY_HEIGHT
     )
 
@@ -412,7 +411,7 @@ def create_key_buttons(app, WINDOW_HEIGHT, size_by_pixel):
         command=lambda: [play_sound.play_Gs4(), which_button_is_pressed('G#4')],
     )
     Gs4_key.place(
-        x=WHITE_PIANO_KEY_WIDTH * 11 + WHITE_PIANO_KEY_WIDTH - BLACK_PIANO_KEY_WIDTH / 2, 
+        x=WHITE_PIANO_KEY_WIDTH * 11 + WHITE_PIANO_KEY_WIDTH - BLACK_PIANO_KEY_WIDTH / 2,
         y=WINDOW_HEIGHT - WHITE_PIANO_KEY_HEIGHT
     )
 
@@ -429,7 +428,7 @@ def create_key_buttons(app, WINDOW_HEIGHT, size_by_pixel):
         command=lambda: [play_sound.play_As4(), which_button_is_pressed('A#4')],
     )
     As4_key.place(
-        x=WHITE_PIANO_KEY_WIDTH * 12 + WHITE_PIANO_KEY_WIDTH - BLACK_PIANO_KEY_WIDTH / 2, 
+        x=WHITE_PIANO_KEY_WIDTH * 12 + WHITE_PIANO_KEY_WIDTH - BLACK_PIANO_KEY_WIDTH / 2,
         y=WINDOW_HEIGHT - WHITE_PIANO_KEY_HEIGHT
     )
 
@@ -446,7 +445,7 @@ def create_key_buttons(app, WINDOW_HEIGHT, size_by_pixel):
         command=lambda: [play_sound.play_Cs5(), which_button_is_pressed('C#5')],
     )
     Cs5_key.place(
-        x=WHITE_PIANO_KEY_WIDTH * 14 + WHITE_PIANO_KEY_WIDTH - BLACK_PIANO_KEY_WIDTH / 2, 
+        x=WHITE_PIANO_KEY_WIDTH * 14 + WHITE_PIANO_KEY_WIDTH - BLACK_PIANO_KEY_WIDTH / 2,
         y=WINDOW_HEIGHT - WHITE_PIANO_KEY_HEIGHT
     )
 
@@ -463,5 +462,5 @@ def create_key_buttons(app, WINDOW_HEIGHT, size_by_pixel):
         command=lambda: [play_sound.play_Ds5(), which_button_is_pressed('D#5')],
     )
     Ds5_key.place(
-        x=WHITE_PIANO_KEY_WIDTH * 15 + WHITE_PIANO_KEY_WIDTH - BLACK_PIANO_KEY_WIDTH / 2, 
+        x=WHITE_PIANO_KEY_WIDTH * 15 + WHITE_PIANO_KEY_WIDTH - BLACK_PIANO_KEY_WIDTH / 2,
         y=WINDOW_HEIGHT - WHITE_PIANO_KEY_HEIGHT)

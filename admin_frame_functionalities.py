@@ -97,4 +97,3 @@ class AdminFrame:
         logout_button = tk.Button(self.admin_frame, text='Logout', command=lambda : \
                                   [self.change_to_login_frame(login_frame)])
         logout_button.pack()
-
