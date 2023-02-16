@@ -47,8 +47,8 @@ class RegistrationFrame:
             popup_windows.popup_window(self.registration_frame, "Select a role!", "Try again!")
         elif self.registration_fields_data['password'] != self.registration_fields_data['confirm_password']:
             popup_windows.popup_window(self.registration_frame, "Passwords are not matching!", "Try again!")
-        # elif bool(re.match(r"^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$", registration_fields_data['password'])) == False:
-        #     popup_windows.passwords_error_popup(registration_frame, "Passwords should have at least 6 symbols \n including capital letter and a number!" )
+        elif bool(re.match(r".*\d.*", self.registration_fields_data['password']) and re.match(r".*[A-Z].*", self.registration_fields_data['password']) and len(self.registration_fields_data['password']) >= 8) == False:
+            popup_windows.popup_window(self.registration_frame, "Passwords should have at least 8 symbols \n including capital letter and a number!", "Try again!" )
         else:
             try:
                 if self.registration_fields_data['role'] == "User with global rights":
