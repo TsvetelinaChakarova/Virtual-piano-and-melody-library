@@ -15,7 +15,7 @@ class ViewGlobalMelodiesFrame:
         self.view_melodies_frame = tk.Frame(app)
         self.treeview = self.display_users_melodies(database_functionalities.database)
 
-    def display_users_melodies(self, database):
+    def create_treeview(self):
         self.treeview = ttk.Treeview(self.view_melodies_frame, column=("melody_name"), show='headings')
         self.treeview["columns"] = ("melody_name", "creators_name")
         self.treeview.column("melody_name", anchor=tk.CENTER)
@@ -23,7 +23,9 @@ class ViewGlobalMelodiesFrame:
         self.treeview.column("creators_name", anchor=tk.CENTER)
         self.treeview.heading("creators_name", text="Creators name")
         self.treeview.pack()
-
+    
+    def display_users_melodies(self, database):
+        self.create_treeview()
         cursor = database.cursor()
         cursor.execute("""SELECT name, creators_username FROM melodys WHERE visibility = 'User with global rights'""")
         rows = cursor.fetchall()
@@ -35,8 +37,8 @@ class ViewGlobalMelodiesFrame:
         selected_item = self.treeview.selection()
         cursor = database_functionalities.database.cursor()
         cursor.execute(
-            """SELECT path FROM melodys WHERE creators_username = '""" + self.treeview.item(selected_item)['values'][
-                1] + """' AND name = '""" + self.treeview.item(selected_item)['values'][0] + """'""")
+            """SELECT path FROM melodys WHERE creators_username = '""" + self.treeview.item(selected_item)['values'][1] 
+            + """' AND name = '""" + self.treeview.item(selected_item)['values'][0] + """'""")
         for row in cursor:
             for record in row:
                 path_to_melody = record
@@ -51,14 +53,7 @@ class ViewGlobalMelodiesFrame:
 
     def search_melody(self, search_input_field):
         self.treeview.destroy()
-        self.treeview = ttk.Treeview(self.view_melodies_frame, column=("melody_name"), show='headings')
-        self.treeview["columns"] = ("melody_name", "creators_name")
-        self.treeview.column("melody_name", anchor=tk.CENTER)
-        self.treeview.heading("melody_name", text="Melody name")
-        self.treeview.column("creators_name", anchor=tk.CENTER)
-        self.treeview.heading("creators_name", text="Creators name")
-        self.treeview.pack()
-
+        self.create_treeview()
         keyword = search_input_field.get()
         cursor = database_functionalities.database.cursor()
         cursor = cursor.execute(
