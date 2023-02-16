@@ -7,7 +7,7 @@ class AdminFrame:
 
     def __init__(self, app):
         self.admin_frame = tk.Frame(app)
-        self.treeview = self.display_requests_for_global_user_table(database_functionalities.database)
+        self.treeview = self.display_requests_for_global_user_table()
 
     def add_global_user(self):
         self.treeview.bind('<<TreeviewSelect>>', self.add_global_user_help_function())
