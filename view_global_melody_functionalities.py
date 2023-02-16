@@ -13,9 +13,10 @@ WINDOW_HEIGHT = 500
 class ViewGlobalMelodiesFrame:
     def __init__(self, app):
         self.view_melodies_frame = tk.Frame(app)
-        self.treeview = ttk.Treeview(self.view_melodies_frame, column=("melody_name"), show='headings')
+        self.treeview = self.display_users_melodies(database_functionalities.database)
 
     def display_users_melodies(self, database): 
+        self.treeview = ttk.Treeview(self.view_melodies_frame, column=("melody_name"), show='headings')
         self.treeview["columns"] = ("melody_name", "creators_name")
         self.treeview.column("melody_name", anchor=tk.CENTER)
         self.treeview.heading("melody_name", text="Melody name")
@@ -46,7 +47,22 @@ class ViewGlobalMelodiesFrame:
         virtual_piano_frame.virtual_piano_frame.pack(fill='both', expand=1)
         self.view_melodies_frame.pack_forget()
 
+    # def search_melody(self):
+        # cursor = database_functionalities.database.cursor()
+        # keyword = ''
+        # cursor = cursor.execute("SELECT name, path, creators_username FROM melodys WHERE keywords LIKE '" + keyword + " %' or keywords LIKE '% " + keyword + "' or keywords LIKE '% " + keyword + " %' or keywords LIKE '" + keyword + "'")
+        # for row in cursor:
+        #     print(row[0], row[1], row[2])
+
     def create_fields(self, virtual_piano_frame):
+        tk.Label(self.view_melodies_frame, text="Input a keyword:").pack()
+        search_input_field = tk.Entry(self.view_melodies_frame)
+        search_input_field.pack()
+
+        search_button = tk.Button(self.view_melodies_frame, text="Search", 
+                        command=lambda:[self.search_melody()])
+        search_button.pack()
+
         play_button = tk.Button(self.view_melodies_frame, text="Play", 
                         command=lambda:[self.play_melody()])
         play_button.pack()

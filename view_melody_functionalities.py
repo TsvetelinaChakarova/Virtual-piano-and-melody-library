@@ -13,9 +13,11 @@ WINDOW_HEIGHT = 500
 class ViewMelodiesFrame:
     def __init__(self, app):
         self.view_melodies_frame = tk.Frame(app)
-        self.treeview = ttk.Treeview(self.view_melodies_frame, column=("melody_name"), show='headings')
+        self.treeview = self.display_users_melodies(database_functionalities.database)
+
 
     def display_users_melodies(self, database): 
+        self.treeview = ttk.Treeview(self.view_melodies_frame, column=("melody_name"), show='headings')
         self.treeview["columns"] = ("melody_name")
         self.treeview.column("melody_name", anchor=tk.CENTER)
         self.treeview.heading("melody_name", text="Melody name")
