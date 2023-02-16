@@ -47,12 +47,23 @@ class ViewGlobalMelodiesFrame:
         virtual_piano_frame.virtual_piano_frame.pack(fill='both', expand=1)
         self.view_melodies_frame.pack_forget()
 
-    # def search_melody(self):
-        # cursor = database_functionalities.database.cursor()
-        # keyword = ''
-        # cursor = cursor.execute("SELECT name, path, creators_username FROM melodys WHERE keywords LIKE '" + keyword + " %' or keywords LIKE '% " + keyword + "' or keywords LIKE '% " + keyword + " %' or keywords LIKE '" + keyword + "'")
-        # for row in cursor:
-        #     print(row[0], row[1], row[2])
+    def search_melody(self, search_input_field):
+        self.treeview.destroy()
+        self.treeview = ttk.Treeview(self.view_melodies_frame, column=("melody_name"), show='headings')
+        self.treeview["columns"] = ("melody_name", "creators_name")
+        self.treeview.column("melody_name", anchor=tk.CENTER)
+        self.treeview.heading("melody_name", text="Melody name")
+        self.treeview.column("creators_name", anchor=tk.CENTER)
+        self.treeview.heading("creators_name", text="Creators name")
+        self.treeview.pack()
+        
+        keyword = search_input_field.get()
+        cursor = database_functionalities.database.cursor()
+        cursor = cursor.execute("SELECT name, creators_username FROM melodys WHERE visibility = 'User with global rights' AND (keywords LIKE '" + keyword + " %' or keywords LIKE '% " + keyword + "' or keywords LIKE '% " + keyword + " %' or keywords LIKE '" + keyword + "')")
+        rows = cursor.fetchall()    
+        for row in rows:
+            self.treeview.insert("", tk.END, values=row)  
+        self.view_melodies_frame.pack()
 
     def create_fields(self, virtual_piano_frame):
         tk.Label(self.view_melodies_frame, text="Input a keyword:").pack()
@@ -60,7 +71,7 @@ class ViewGlobalMelodiesFrame:
         search_input_field.pack()
 
         search_button = tk.Button(self.view_melodies_frame, text="Search", 
-                        command=lambda:[self.search_melody()])
+                        command=lambda:[self.search_melody(search_input_field)])
         search_button.pack()
 
         play_button = tk.Button(self.view_melodies_frame, text="Play", 
