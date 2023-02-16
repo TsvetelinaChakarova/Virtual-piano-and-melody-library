@@ -3,8 +3,8 @@ import key_buttons
 from pydub import AudioSegment
 import database_functionalities
 import login_frame_functionalities
-import popup_windows
 import os
+import popup_windows
 
 SAVE_MELODY_POPUP_WINDOW_WIDTH = 600
 SAVE_MELODY_POPUP_WINDOW_HEIGHT = 300
@@ -15,6 +15,15 @@ MELODY_NAME_INPUT_FIELD_HEIGHT = 1
 def save_melody(save_melody_popup_window, melody_name_input_field, melody_keywords_input_field, menu):
     melody_name = melody_name_input_field.get("1.0", "end-1c")
     melody_keywords = melody_keywords_input_field.get("1.0", "end-1c")
+    
+    if melody_name == "" or melody_keywords == "": 
+        popup_windows.popup_window(save_melody_popup_window, "Fill in all entry fields!", "Try again!")
+        return None
+    
+    if menu.get() == "Select":
+        popup_windows.popup_window(save_melody_popup_window, "Select a role!", "Try again!")
+        return None
+
     combined_notes =  AudioSegment.empty()
     for note in key_buttons.melody:
         combined_notes += AudioSegment.from_wav('notes/' + note + '.wav')

@@ -16,6 +16,15 @@ def save_melody(save_melody_popup_window, melody_input_field, melody_name_input_
         melody = melody_input_field.get("1.0", "end-1c")
         melody_name = melody_name_input_field.get("1.0", "end-1c")
         melody_keywords = melody_keywords_input_field.get("1.0", "end-1c")
+        
+        if melody_name == "" or melody_keywords == "": 
+            popup_windows.popup_window(save_melody_popup_window, "Fill in all entry fields!", "Try again!")
+            return None
+        
+        if menu.get() == "Select":
+            popup_windows.popup_window(save_melody_popup_window, "Select a role!", "Try again!")
+            return None
+
         combined_notes =  AudioSegment.empty()
         for note in melody.split(" "):
             combined_notes += AudioSegment.from_wav('notes/' + note + '.wav')
@@ -43,9 +52,11 @@ def save_melody_popup_window(app):
     
     rules = """Please follow the listed rules:
     1. Input notes in the ABC notation. Only A, B, C, D, E, F, G are permitted.
-    2. Input 'sharp' as '#'. Sharp is not required.  
-    3. Input notes only shown at the piano: from C3 to E5.
-    Examples: F#4, E3"""
+    2. Next input 'sharp' as '#'. Sharp is not required.  
+    4. Next input a number for the octave.
+    5. Separate notes with one space
+    6. Input notes only shown at the piano: from C3 to E5.
+    Example: F#4 E3 A#4"""
     rules_button = tk.Button(save_melody_popup_window, text='Rules', command=lambda:[popup_windows.popup_window(save_melody_popup_window, rules, "Continue")])
     rules_button.pack()
     
