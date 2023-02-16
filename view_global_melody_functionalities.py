@@ -24,9 +24,9 @@ class ViewGlobalMelodiesFrame:
         self.treeview.heading("creators_name", text="Creators name")
         self.treeview.pack()
     
-    def display_users_melodies(self, database):
+    def display_users_melodies(self):
         self.create_treeview()
-        cursor = database.cursor()
+        cursor = database_functionalities.database.cursor()
         cursor.execute("""SELECT name, creators_username FROM melodys WHERE visibility = 'User with global rights'""")
         rows = cursor.fetchall()
         for row in rows:

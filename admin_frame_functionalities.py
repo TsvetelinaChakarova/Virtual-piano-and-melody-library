@@ -50,7 +50,7 @@ class AdminFrame:
                        (self.treeview.item(selected_item)['values'][0], ))
         database_functionalities.database.commit()
 
-    def display_requests_for_global_user_table(self, database):
+    def display_requests_for_global_user_table(self):
         treeview = ttk.Treeview(self.admin_frame, column=('username',
                                 'first_name', 'last_name', 'email',
                                 'motivation'), show='headings')
@@ -68,16 +68,16 @@ class AdminFrame:
         treeview.heading('motivation', text='Motivation')
         treeview.pack()
 
-        cursor = database.cursor()
+        cursor = database_functionalities.database.cursor()
         cursor.execute("SELECT username, first_name, last_name, email, motivation FROM requests_for_global_user_table")
         rows = cursor.fetchall()
         for row in rows:
             treeview.insert('', tk.END, values=row)
         return treeview
 
-    def refresh_admin_frame(self, database):
+    def refresh_admin_frame(self):
         self.treeview.destroy()
-        self.treeview = self.display_requests_for_global_user_table(database)
+        self.treeview = self.display_requests_for_global_user_table(database_functionalities.database)
 
     def change_to_login_frame(self, login_frame):
         login_frame.login_frame.pack(fill='both', expand=1)

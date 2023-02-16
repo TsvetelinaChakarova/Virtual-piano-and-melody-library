@@ -22,9 +22,9 @@ class ViewMelodiesFrame:
         self.treeview.heading("melody_name", text="Melody name")
         self.treeview.pack()
 
-    def display_users_melodies(self, database):
+    def display_users_melodies(self):
         self.create_treeview()
-        cursor = database.cursor()
+        cursor = database_functionalities.database.cursor()
         cursor.execute(
             "SELECT name FROM melodys WHERE creators_username = '""" + login_frame_functionalities.current_user_username + "'")
         rows = cursor.fetchall()
