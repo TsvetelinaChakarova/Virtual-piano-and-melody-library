@@ -30,7 +30,7 @@ class LoginFrame:
         elif self.login_fields_data['username'] == 'Admin' and database_functionalities.check_username_and_password(
                 self.login_fields_data['username'], self.login_fields_data['password']):
             admin_frame.treeview.destroy()
-            admin_frame.treeview = admin_frame.display_requests_for_global_user_table(database_functionalities.database)
+            admin_frame.treeview = admin_frame.display_requests_for_global_user_table()
             admin_frame.admin_frame.pack(fill='both', expand=1)
             self.login_frame.pack_forget()
         elif database_functionalities.check_username_and_password(self.login_fields_data['username'],

@@ -5,6 +5,7 @@ import database_functionalities
 import login_frame_functionalities
 import os
 import popup_windows
+import sqlite3
 
 SAVE_MELODY_POPUP_WINDOW_WIDTH = 600
 SAVE_MELODY_POPUP_WINDOW_HEIGHT = 300
@@ -33,17 +34,20 @@ def save_melody(save_melody_popup_window, melody_name_input_field, melody_keywor
     if not isExist:
         os.makedirs(path)
     combined_notes.export(path + '/' + melody_name + '.wav', format="wav")
-    if login_frame_functionalities.current_user_role == "User with global rights" and menu.get() == "Save as local melody":
-        database_functionalities.insert_into_melodys_table(melody_name, path + '/' + melody_name + '.wav',
-                                                           melody_keywords,
-                                                           login_frame_functionalities.current_user_username,
-                                                           "User with local rights")
-    else:
-        database_functionalities.insert_into_melodys_table(melody_name, path + '/' + melody_name + '.wav',
-                                                           melody_keywords,
-                                                           login_frame_functionalities.current_user_username,
-                                                           login_frame_functionalities.current_user_role)
-    database_functionalities.database.commit()
+    try: 
+        if login_frame_functionalities.current_user_role == "User with global rights" and menu.get() == "Save as local melody":
+            database_functionalities.insert_into_melodys_table(melody_name, path + '/' + melody_name + '.wav',
+                                                            melody_keywords,
+                                                            login_frame_functionalities.current_user_username,
+                                                            "User with local rights")
+        else:
+            database_functionalities.insert_into_melodys_table(melody_name, path + '/' + melody_name + '.wav',
+                                                            melody_keywords,
+                                                            login_frame_functionalities.current_user_username,
+                                                            login_frame_functionalities.current_user_role)
+        database_functionalities.database.commit()
+    except sqlite3.IntegrityError:
+        popup_windows.popup_window(save_melody_popup_window, "You already have a melody with that name", "Try again!")
     save_melody_popup_window.destroy()
 
 

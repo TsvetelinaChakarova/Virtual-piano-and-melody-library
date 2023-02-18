@@ -77,7 +77,7 @@ class AdminFrame:
 
     def refresh_admin_frame(self):
         self.treeview.destroy()
-        self.treeview = self.display_requests_for_global_user_table(database_functionalities.database)
+        self.treeview = self.display_requests_for_global_user_table()
 
     def change_to_login_frame(self, login_frame):
         login_frame.login_frame.pack(fill='both', expand=1)
@@ -86,12 +86,12 @@ class AdminFrame:
     def create_fields(self, login_frame):
         add_global_user_button = tk.Button(self.admin_frame, text='Add user', command=lambda : \
                 [self.add_global_user(),
-                self.refresh_admin_frame(database_functionalities.database)])
+                self.refresh_admin_frame()])
         add_global_user_button.pack()
 
         reject_global_user_button = tk.Button(self.admin_frame, text='Reject user', command=lambda : \
                 [self.reject_global_user(),
-                self.refresh_admin_frame(database_functionalities.database)])
+                self.refresh_admin_frame()])
         reject_global_user_button.pack()
 
         logout_button = tk.Button(self.admin_frame, text='Logout', command=lambda : \
