@@ -33,16 +33,22 @@ class LoginFrame:
             admin_frame.treeview = admin_frame.display_requests_for_global_user_table()
             admin_frame.admin_frame.pack(fill='both', expand=1)
             self.login_frame.pack_forget()
+            username_input_field.delete(0, "end")
+            password_input_field.delete(0, "end")
         elif database_functionalities.check_username_and_password(self.login_fields_data['username'],
                                                                   self.login_fields_data['password']):
             virtual_piano_frame.virtual_piano_frame.pack(fill='both', expand=1)
             self.login_frame.pack_forget()
+            username_input_field.delete(0, "end")
+            password_input_field.delete(0, "end")
         else:
             popup_windows.popup_window(self.login_frame, "Invalid username or password!", "Try again!")
 
-    def change_to_registration_frame(self, registration_frame):
+    def change_to_registration_frame(self, registration_frame, username_input_field, password_input_field):
         registration_frame.registration_frame.pack(fill='both', expand=1)
         self.login_frame.pack_forget()
+        username_input_field.delete(0, "end")
+        password_input_field.delete(0, "end")
 
     def create_fields(self, registration_frame, virtual_piano_frame, admin_frame):
         tk.Label(self.login_frame, text="username:").pack()
@@ -59,5 +65,5 @@ class LoginFrame:
         login_button.pack()
 
         create_account_button = tk.Button(self.login_frame, text='Create account',
-                                          command=lambda: [self.change_to_registration_frame(registration_frame)])
+                                          command=lambda: [self.change_to_registration_frame(registration_frame, username_input_field, password_input_field)])
         create_account_button.pack()
