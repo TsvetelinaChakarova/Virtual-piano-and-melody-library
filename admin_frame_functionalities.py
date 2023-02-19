@@ -31,9 +31,7 @@ class AdminFrame:
         database_functionalities.insert_into_global_user_additional_info_table(self.treeview.item(selected_item)['values'][0],
                 self.treeview.item(selected_item)['values'][4],
                 self.treeview.item(selected_item)['values'][3])
-        sql_delete_query = "DELETE from requests_for_global_user_table where username = ?"
-        cursor.execute(sql_delete_query, (self.treeview.item(selected_item)['values'][0], ))
-        database_functionalities.database.commit()
+        database_functionalities.delete_requests(self.treeview.item(selected_item)['values'][0])
 
     def reject_global_user(self):
         self.treeview.bind('<<TreeviewSelect>>', self.reject_global_user_help_function())
