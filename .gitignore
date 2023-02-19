@@ -1,3 +1,4 @@
 virtual_piano_and_melody_library.db
 Melodys
 __pycache__
+tests.py

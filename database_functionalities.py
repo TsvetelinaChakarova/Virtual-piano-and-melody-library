@@ -113,3 +113,9 @@ def get_role_from_username(username):
     for row in records:
         role_for_user = (row[4])
     return role_for_user
+
+def delete_requests(item):
+    cursor = database.cursor()
+    sql_delete_query = "DELETE from requests_for_global_user_table where username = ?"
+    cursor.execute(sql_delete_query, (item, ))
+    database.commit()

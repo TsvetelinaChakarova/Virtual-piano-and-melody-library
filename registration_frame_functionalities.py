@@ -27,6 +27,12 @@ class RegistrationFrame:
         self.registration_fields_data['motivation'] = motivation_input_field.get()
         self.registration_fields_data['email'] = email_input_field.get()
 
+    def is_password_correct(self, password):
+        return bool(re.match(r".*\d.*", password) and re.match(r".*[A-Z].*", password) and len(password) >= 8)
+    
+    def is_user_global(self, role):
+        return role == "User with global rights"
+
     def register(self, username_input_field, password_input_field, confirm_password_input_field,
                  first_name_input_field, last_name_input_field, menu, motivation_input_field, email_input_field,
                  login_frame):
@@ -34,7 +40,7 @@ class RegistrationFrame:
                                    first_name_input_field, last_name_input_field, menu)
         self.get_global_user_input_fields_data(motivation_input_field, email_input_field)
 
-        if self.registration_fields_data['role'] == "User with global rights":
+        if self.is_user_global(self.registration_fields_data['role']):
             if self.registration_fields_data['motivation'] == '' or self.registration_fields_data['email'] == '':
                 popup_windows.popup_window(self.registration_frame, "Fill in all entry fields!", "Try again!")
                 return None
@@ -47,11 +53,11 @@ class RegistrationFrame:
             popup_windows.popup_window(self.registration_frame, "Select a role!", "Try again!")
         elif self.registration_fields_data['password'] != self.registration_fields_data['confirm_password']:
             popup_windows.popup_window(self.registration_frame, "Passwords are not matching!", "Try again!")
-        elif bool(re.match(r".*\d.*", self.registration_fields_data['password']) and re.match(r".*[A-Z].*", self.registration_fields_data['password']) and len(self.registration_fields_data['password']) >= 8) == False:
+        elif self.is_password_correct(self.registration_fields_data['password']) == False:
             popup_windows.popup_window(self.registration_frame, "Passwords should have at least 8 symbols \n including capital letter and a number!", "Try again!" )
         else:
             try:
-                if self.registration_fields_data['role'] == "User with global rights":
+                if self.is_user_global(self.registration_fields_data['role']):
                     database_functionalities.insert_into_requests_for_global_user_table(
                         self.registration_fields_data['username'],
                         hashlib.sha256(self.registration_fields_data['password'].encode()).hexdigest(),
